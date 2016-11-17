@@ -150,6 +150,7 @@
 				//
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
+			
 			function onWindowResize() {
 				windowHalfX = window.innerWidth / 2;
 				windowHalfY = window.innerHeight / 2;
@@ -157,15 +158,18 @@
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
+
 			//
 			function boolToNum( b ) {
 				return b ? 1 : 0;
 			}
+
 			function updatePermalink() {
 				var link = hex + fontMap[ fontName ] + weightMap[ fontWeight ] + boolToNum( bevelEnabled ) + "#" + encodeURI( text );
 				permalink.href = "#" + link;
 				window.location.hash = link;
 			}
+
 			function onDocumentKeyDown( event ) {
 				if ( firstLetter ) {
 					firstLetter = false;
@@ -180,6 +184,7 @@
 					return false;
 				}
 			}
+
 			function onDocumentKeyPress( event ) {
 				var keyCode = event.which;
 				// backspace
@@ -191,6 +196,8 @@
 					refreshText();
 				}
 			}
+
+
 			function loadFont() {
 				var loader = new THREE.FontLoader();
 				loader.load( 'fonts/' + fontName + '_' + fontWeight + '.typeface.json', function ( response ) {
@@ -198,6 +205,8 @@
 					refreshText();
 				} );
 			}
+
+
 			function createText() {
 				textGeo = new THREE.TextGeometry( text, {
 					font: font,
@@ -253,6 +262,7 @@
 					group.add( textMesh2 );
 				}
 			}
+
 			function refreshText() {
 				updatePermalink();
 				group.remove( textMesh1 );
@@ -260,6 +270,7 @@
 				if ( !text ) return;
 				createText();
 			}
+
 			function onDocumentMouseDown( event ) {
 				event.preventDefault();
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -268,20 +279,25 @@
 				mouseXOnMouseDown = event.clientX - windowHalfX;
 				targetRotationOnMouseDown = targetRotation;
 			}
+
 			function onDocumentMouseMove( event ) {
 				mouseX = event.clientX - windowHalfX;
 				targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
 			}
+
 			function onDocumentMouseUp( event ) {
 				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
 				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
 			}
+
 			function onDocumentMouseOut( event ) {
 				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
 				document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
 			}
+
+
 			function onDocumentTouchStart( event ) {
 				if ( event.touches.length == 1 ) {
 					event.preventDefault();
@@ -289,6 +305,7 @@
 					targetRotationOnMouseDown = targetRotation;
 				}
 			}
+
 			function onDocumentTouchMove( event ) {
 				if ( event.touches.length == 1 ) {
 					event.preventDefault();
@@ -297,15 +314,16 @@
 				}
 			}
 			//
+
 			function animate() {
 				requestAnimationFrame( animate );
 				render();
 				stats.update();
 			}
+
 			function render() {
 				group.rotation.y += ( targetRotation - group.rotation.y ) * 0.05;
 				camera.lookAt( cameraTarget );
 				renderer.clear();
 				renderer.render( scene, camera );
 			}
-		</script>
