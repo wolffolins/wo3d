@@ -1,3 +1,10 @@
+var socket = io('https://wohack-chat-client.herokuapp.com/');
+
+socket.on('chat message', function(msg){
+	console.log(msg);
+	updateText(msg);
+});
+
 var windowWidth  = window.innerWidth * window.devicePixelRatio;
 var windowHeight  = window.innerHeight * window.devicePixelRatio;
 
