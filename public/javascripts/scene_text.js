@@ -8,6 +8,8 @@ socket.on('chat message', function(msg){
 var windowWidth  = window.innerWidth * window.devicePixelRatio;
 var windowHeight  = window.innerHeight * window.devicePixelRatio;
 
+
+
 //create scene
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer();
@@ -62,7 +64,7 @@ var views = [
 		up: [ 0, 1, 0 ],
 		fov: 30,
 		angle: 270,
-		rotation: 101.25
+		rotation: -33.75
 	}
 ];
 
@@ -85,7 +87,7 @@ scene.add( directional )
 window.ambient = new THREE.AmbientLight( 0x666666 )
 scene.add( ambient )
 
-/*
+
 // create the stars
 var pMaterial = new THREE.ParticleBasicMaterial({
   color: 0xFFFFFF,
@@ -112,7 +114,7 @@ scene.add(particles)
 window.particleSystem = new THREE.ParticleSystem(particles, pMaterial);
 particleSystem.sortParticles = true;
 scene.add(particleSystem);
-
+/*
 
 //clouds object
 window.clouds = new THREE.Mesh(
@@ -150,7 +152,7 @@ var textGeom;
 var textMesh;
 var pivot;
 
-updateText("Check the Technique");
+updateText("pepperspray");
 
 // Do some optional calculations. This is only if you need to get the
 // width of the generated text
@@ -201,8 +203,8 @@ function render(){
 	//rotate cloud and earth independently
 	//clouds.rotation.y+=.002
 	//earth.rotation.y+=.001
-	//particleSystem.rotation.y+=.003
-	
+	particleSystem.rotation.y+=.003;
+
 	//for each view
 	for (var i =  0; i < views.length; i++ ) {
 		//grab each view
@@ -249,8 +251,18 @@ function updateText(message){
 	pivot = new THREE.Object3D();
 
 	textGeom = new THREE.TextGeometry( message.toUpperCase(), {
-    font: 'mr headlines' // Must be lowercase!
+    font: 'mr headlines', // Must be lowercase!
+	size: 100,
+	height: 20,
+	curveSegments: 10,
+	bevelThickness: 3,
+	bevelSize: 4,
+	bevelEnabled: true,
+	extrudeMaterial: 1
 	});
+
+
+
 
 	textMesh = new THREE.Mesh( textGeom, material );
 	pivot.add(textMesh);
