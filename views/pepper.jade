@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  p +
+  script(src="/socket.io/socket.io.js")
+  script
+    include ../public/javascripts/scene_pepper.js
+  script
+    include ../public/javascripts/application.js

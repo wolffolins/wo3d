@@ -3,7 +3,11 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src='/javascripts/three.js')
-    script(src='/javascripts/headlinefont.js')
+    script(src="/javascripts/three.js")
+    script(src="/javascripts/vendor/OBJLoader.js")
+    script(src="/javascripts/pepper.js")
+    script(src="/javascripts/Detector.js")
+
+    meta(name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0")
   body
     block content

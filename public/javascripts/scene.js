@@ -5,11 +5,11 @@ var windowHeight  = window.innerHeight * window.devicePixelRatio;
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement); 
+document.body.appendChild(renderer.domElement);
 
 //create views
 var views = [
-	{ 
+	{
 		left: 0,
 		bottom: 0.5,
 		width: 0.5,
@@ -21,7 +21,7 @@ var views = [
 		angle : 0,
 		rotation: 33.75
 	},
-	{ 
+	{
 		left: 0,
 		bottom: 0,
 		width: 0.5,
@@ -33,7 +33,7 @@ var views = [
 		angle: 90,
 		rotation: 101.25
 	},
-	{ 
+	{
 		left: 0.5,
 		bottom: 0,
 		width: 0.5,
@@ -45,7 +45,7 @@ var views = [
 		angle: 180,
 		rotation: -101.25
 	},
-	{ 
+	{
 		left: 0.5,
 		bottom: 0.5,
 		width: 0.5,
@@ -109,7 +109,7 @@ scene.add(particleSystem);
 //clouds object
 window.clouds = new THREE.Mesh(
 new THREE.SphereGeometry( 50 + 1, 32, 32 ),
-new THREE.MeshLambertMaterial({ 
+new THREE.MeshLambertMaterial({
   map: THREE.ImageUtils.loadTexture( '/media/clouds.jpg' ),
   transparent: true,
   blending: THREE.CustomBlending,
@@ -157,26 +157,24 @@ window.addEventListener( 'resize', onWindowResize, false );
 function onWindowResize(){
     windowWidth  = window.innerWidth * window.devicePixelRatio;
     windowHeight  = window.innerHeight * window.devicePixelRatio;
-    
+
     for (var i =  0; i < views.length; i++ ) {
 		var view = views[i]
 		var camera = view.camera;
 		camera.aspect = windowWidth / windowHeight;
 		camera.updateProjectionMatrix();
 	}
-	
+
 	renderer.setSize(window.innerWidth, window.innerHeight);
-	
+
 }
 
 
 function render(){
 
 	//rotate cloud and earth independently
-	clouds.rotation.y+=.002
-	earth.rotation.y+=.001
-	particleSystem.rotation.y+=.003
-	
+console.log('bughunt')
+
 	//for each view
 	for (var i =  0; i < views.length; i++ ) {
 		//grab each view
@@ -184,7 +182,7 @@ function render(){
 
 		//grab each camera
 		var camera = view.camera;
-		
+
 		//Adjust camera within 3D spherical coordinates
 		camera.position.x = earth.position.x + cameraRadius * Math.sin(rotateY * Math.PI/180) * Math.cos(view.angle * Math.PI/180)
 		camera.position.z = earth.position.y + cameraRadius * Math.sin(rotateY * Math.PI/180) * Math.sin(view.angle * Math.PI/180)
@@ -193,7 +191,7 @@ function render(){
 
 		//Set rotation of camera on Z-Axis
 		camera.rotation.z= view.rotation - Math.PI;
-		
+
 		//Grab view ports
 		var left   = Math.floor( windowWidth  * view.left );
 		var bottom = Math.floor( windowHeight * view.bottom );
@@ -202,18 +200,19 @@ function render(){
 
 		//Render
 		renderer.setViewport( left, bottom, width, height );
-		renderer.setScissor( left, bottom, width, height );
-		renderer.enableScissorTest ( true );
+	//	renderer.setScissor( left, bottom, width, height );
+		//renderer.setScissorTest ( false );
 		renderer.setClearColor( view.background, view.background.a );
-		
-		renderer.render(scene, camera)
+
+		renderer.render(scene, camera);
+		console.log("scene");
 	}
 }
 
 
 function animate(){
 	render();
-	
+
 	requestAnimationFrame( animate );
 }
 
